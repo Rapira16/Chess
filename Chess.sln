@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess", "Chess\Chess.csproj", "{59927189-823A-4752-A196-71C4557A6339}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{B2DD1DBD-8203-4411-8B83-74CC849FB249}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{59927189-823A-4752-A196-71C4557A6339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59927189-823A-4752-A196-71C4557A6339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59927189-823A-4752-A196-71C4557A6339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2DD1DBD-8203-4411-8B83-74CC849FB249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2DD1DBD-8203-4411-8B83-74CC849FB249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2DD1DBD-8203-4411-8B83-74CC849FB249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2DD1DBD-8203-4411-8B83-74CC849FB249}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
