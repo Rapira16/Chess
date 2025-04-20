@@ -1,5 +1,6 @@
 namespace Core.Board;
 using Pieces;
+using Logic;
 
 public class Board
 {
@@ -62,15 +63,42 @@ public class Board
         
         Piece? piece = _board[startRow, startCol];
 
-        if (piece == null)
+        if (piece == null || !IsValidMove(startRow, startCol, endRow, endCol, piece))
         {
             Console.WriteLine("No piece found");
             return false;
         }
         
         _board[endRow, endCol] = piece;
-        _board[startCol, startRow] = null;
+        _board[startRow, startCol] = null;
         piece.MarkMoved();
         return true;
+    }
+
+    private bool IsValidMove(int startRow, int startCol, int endRow, int endCol, Piece piece)
+    {
+        IMoveValidator moveValidator = getMoveValidatorForPiece(piece);
+        return moveValidator.IsValidMove(startRow, startCol, endRow, endCol, _board);
+    }
+
+    private IMoveValidator getMoveValidatorForPiece(Piece piece)
+    {
+        switch (piece.Type)
+        {
+            case PieceType.Pawn:
+                return new Pawn();
+            case PieceType.Rook:
+                return new Rook();
+            case PieceType.Knight:
+                return new Knight();
+            case PieceType.Bishop:
+                return new Bishop();
+            case PieceType.Queen:
+                return new Queen();
+            case PieceType.King:
+                return new King();
+            default:
+                throw new ArgumentException("Invalid piece type");
+        }
     }
 }
