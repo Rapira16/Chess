@@ -91,11 +91,11 @@ public class Board
 
     private bool IsValidMove(int startRow, int startCol, int endRow, int endCol, Piece piece)
     {
-        IMoveValidator moveValidator = getMoveValidatorForPiece(piece);
+        IMoveValidator moveValidator = GetMoveValidatorForPiece(piece);
         return moveValidator.IsValidMove(startRow, startCol, endRow, endCol, _board);
     }
 
-    private IMoveValidator getMoveValidatorForPiece(Piece piece)
+    public IMoveValidator GetMoveValidatorForPiece(Piece piece)
     {
         switch (piece.Type)
         {
