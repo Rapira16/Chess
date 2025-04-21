@@ -6,6 +6,7 @@ public class Board
 {
     private Piece?[,] _board = new Piece[8, 8];
     private TurnManager _turnManager = new TurnManager();
+    private MoveHistory _history = new MoveHistory();
 
     public void InitializeBoard()
     {
@@ -82,11 +83,19 @@ public class Board
             return false;
         }
         
+        _history.RecordMove(startRow, startCol, endRow, endCol, piece);
+        
         _board[endRow, endCol] = piece;
         _board[startRow, startCol] = null;
         piece.MarkMoved();
         _turnManager.SwitchTurn();
         return true;
+    }
+
+    public void Undo()
+    {
+        _history.UndoLastMove(_board);
+        _turnManager.SwitchTurn();
     }
 
     private bool IsValidMove(int startRow, int startCol, int endRow, int endCol, Piece piece)

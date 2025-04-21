@@ -22,10 +22,6 @@ public class GameStateValidator
 
     public bool IsStalemate(PieceColor playerColor, Piece?[,] board)
     {
-        var checkValidator = new CheckValidator(_board);
-        if (!checkValidator.IsKingInCheck(playerColor, board))
-            return false;
-        
         return !HasLegalMoves(playerColor, board);
     }
     

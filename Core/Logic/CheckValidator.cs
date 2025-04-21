@@ -46,6 +46,4 @@ public class CheckValidator
         }
         return null;
     }
-    
-    
 }
