@@ -4,10 +4,12 @@ using Logic;
 
 public class Board
 {
-    private Piece?[,] _board = new Piece[8, 8];
+    public Piece?[,] _board = new Piece[8, 8];
     private TurnManager _turnManager = new TurnManager();
     private MoveHistory _history = new MoveHistory();
 
+    public Piece?[,] GetBoard() => _board;
+    
     public void InitializeBoard()
     {
         _board[0, 0] = new Piece(PieceType.Rook, PieceColor.White);
