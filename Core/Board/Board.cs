@@ -8,6 +8,11 @@ public class Board
     private TurnManager _turnManager = new TurnManager();
     private MoveHistory _history = new MoveHistory();
 
+    public Board()
+    {
+        InitializeBoard();
+    }
+    
     public Piece?[,] GetBoard() => _board;
 
     public Piece? GetPiece(int row, int col)
