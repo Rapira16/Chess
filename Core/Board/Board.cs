@@ -5,6 +5,7 @@ using Logic;
 public class Board
 {
     private Piece?[,] _board = new Piece[8, 8];
+    private TurnManager _turnManager = new TurnManager();
 
     public void InitializeBoard()
     {
@@ -63,15 +64,28 @@ public class Board
         
         Piece? piece = _board[startRow, startCol];
 
-        if (piece == null || !IsValidMove(startRow, startCol, endRow, endCol, piece))
+        if (piece == null)
         {
             Console.WriteLine("No piece found");
+            return false;
+        }
+
+        if (!_turnManager.IsValidTurn(piece))
+        {
+            Console.WriteLine("It's {_turnManager.CurrentTurn} turn");
+            return false;
+        }
+        
+        if (!IsValidMove(startRow, startCol, endRow, endCol, piece))
+        {
+            Console.WriteLine("Invalid move");
             return false;
         }
         
         _board[endRow, endCol] = piece;
         _board[startRow, startCol] = null;
         piece.MarkMoved();
+        _turnManager.SwitchTurn();
         return true;
     }
 
