@@ -9,6 +9,14 @@ public class Board
     private MoveHistory _history = new MoveHistory();
 
     public Piece?[,] GetBoard() => _board;
+
+    public Piece? GetPiece(int row, int col)
+    {
+        if (row < 0 || row >= 8 || col < 0 || col >= 8)
+            throw new IndexOutOfRangeException("Out of board");
+        
+        return _board[row, col];
+    }
     
     public void InitializeBoard()
     {
@@ -56,7 +64,7 @@ public class Board
         }
     }
 
-    public bool MovePiece(int startRow, int startCol, int endRow, int endCol)
+    public bool MovePiece(int startRow, int startCol, int endRow, int endCol, bool simulate = false)
     {
         if (startRow < 0 || startRow >= 8 || startCol < 0 || startCol >= 8 ||
             endRow < 0 || endRow >= 8 || endCol < 0 || endCol >= 8)
@@ -73,7 +81,7 @@ public class Board
             return false;
         }
 
-        if (!_turnManager.IsValidTurn(piece))
+        if (!simulate && !_turnManager.IsValidTurn(piece))
         {
             Console.WriteLine("It's {_turnManager.CurrentTurn} turn");
             return false;
@@ -81,9 +89,13 @@ public class Board
         
         if (!IsValidMove(startRow, startCol, endRow, endCol, piece))
         {
-            Console.WriteLine("Invalid move");
+            if (!simulate)
+                Console.WriteLine("Invalid move");
             return false;
         }
+
+        if (simulate)
+            return true;
         
         _history.RecordMove(startRow, startCol, endRow, endCol, piece);
         
@@ -104,6 +116,24 @@ public class Board
     {
         IMoveValidator moveValidator = GetMoveValidatorForPiece(piece);
         return moveValidator.IsValidMove(startRow, startCol, endRow, endCol, _board);
+    }
+
+    public List<(int Row, int Col)> GetValidMoves(int fromRow, int fromCol)
+    {
+        var result = new List<(int, int)>();
+        var piece = _board[fromRow, fromCol];
+        
+        if (piece == null) return result;
+
+        for (int row = 0; row < 8; row++)
+        {
+            for (int col = 0; col < 8; col++)
+            {
+                if (MovePiece(fromRow, fromCol, row, col, simulate: true))
+                    result.Add((row, col));
+            }
+        }
+        return result;
     }
 
     public IMoveValidator GetMoveValidatorForPiece(Piece piece)
